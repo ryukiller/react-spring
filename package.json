@@ -97,7 +97,7 @@
     "pretty-quick": "4.0.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-konva": "18.2.10",
+    "react-konva": "19.0.3",
     "react-native": "0.76.5",
     "react-zdog": "1.2.2",
     "spec.ts": "1.1.3",
