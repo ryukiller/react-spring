@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { forwardRef } from 'react'
 import { render } from '@testing-library/react'
 import createMockRaf, { MockRaf } from 'mock-raf'
 import { Globals } from '@react-spring/shared'
@@ -27,14 +26,16 @@ describe('animated component', () => {
     expect(queryByTitle('Foo')).toBeTruthy()
   })
   it('wraps a component', () => {
-    const Name = forwardRef<
-      HTMLHeadingElement,
-      { name: string; other: string; children: React.ReactNode }
-    >((props, ref) => (
-      <h2 title={props.name} ref={ref}>
+    const Name = (props: {
+      name: string
+      other: string
+      children: React.ReactNode
+      ref?: React.RefObject<HTMLHeadingElement>
+    }) => (
+      <h2 title={props.name} ref={props.ref}>
         {props.children}
       </h2>
-    ))
+    )
     const AnimatedName = a(Name)
     const child = spring('Animated Text')
     const name = spring('name')
@@ -60,14 +61,15 @@ describe('animated component', () => {
     expect(div.style.opacity).toBe('1')
   })
   it('accepts Animated values in custom style prop', () => {
-    const Name = forwardRef<
-      HTMLHeadingElement,
-      { style: { color: string; opacity?: number }; children: React.ReactNode }
-    >((props, ref) => (
-      <h2 ref={ref} style={props.style}>
+    const Name = (props: {
+      style: { color: string; opacity?: number }
+      children: React.ReactNode
+      ref?: React.RefObject<HTMLHeadingElement>
+    }) => (
+      <h2 ref={props.ref} style={props.style}>
         {props.children}
       </h2>
-    ))
+    )
     const AnimatedName = a(Name)
     const opacity = spring(0.5)
     const { queryByText } = render(

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { forwardRef, useRef, Ref, useCallback, useEffect } from 'react'
+import { useRef, Ref, useCallback, useEffect } from 'react'
 import {
   is,
   each,
@@ -27,7 +27,7 @@ export const withAnimated = (Component: any, host: HostConfig) => {
     !is.fun(Component) ||
     (Component.prototype && Component.prototype.isReactComponent)
 
-  return forwardRef((givenProps: any, givenRef: Ref<any>) => {
+  return (givenProps: any, givenRef: Ref<any>) => {
     const instanceRef = useRef<any>(null)
 
     // The `hasInstance` value is constant, so we can safely avoid
@@ -66,7 +66,7 @@ export const withAnimated = (Component: any, host: HostConfig) => {
 
     const observer = new PropsObserver(callback, deps)
 
-    const observerRef = useRef<PropsObserver>()
+    const observerRef = useRef<PropsObserver>(null)
     useIsomorphicLayoutEffect(() => {
       observerRef.current = observer
 
@@ -94,7 +94,7 @@ export const withAnimated = (Component: any, host: HostConfig) => {
 
     const usedProps = host.getComponentProps(props.getValue())
     return <Component {...usedProps} ref={ref} />
-  })
+  }
 }
 
 class PropsObserver {
